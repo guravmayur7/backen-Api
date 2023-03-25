@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import authRoute from "./routes/auth.js";
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -31,12 +32,8 @@ mongoose
   .catch((error) => console.log(error.message));
 //mongoose.set("useFindAndModify", false); //remove warnings from console.
 
-app.get("/demo", (request, response) => {
-  response.send(" demo app is working");
-});
-
 app.get("/", (request, response) => {
   response.send("app is working");
 });
-
+app.use("/auth", authRoute);
 //app.listen(PORT);
