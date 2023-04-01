@@ -3,6 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
+import bannerRoute from "./routes/banner.js";
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -31,9 +32,12 @@ mongoose
   )
   .catch((error) => console.log(error.message));
 //mongoose.set("useFindAndModify", false); //remove warnings from console.
+app.use(express.static("public"));
+app.use(express.static("assets"));
 
-app.get("/", (request, response) => {
-  response.send("app is working");
-});
+// app.get("/", (request, response) => {
+//   response.send("app is working");
+// });
 app.use("/auth", authRoute);
+app.use("/banners", bannerRoute);
 //app.listen(PORT);

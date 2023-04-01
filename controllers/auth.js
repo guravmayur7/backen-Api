@@ -1,6 +1,8 @@
 import adminModel from "../models/Admins.js";
 import jwt from "jsonwebtoken";
-const jwtAdminKey = "DspBMno166";
+//const jwtAdminKey = "DspBMno166";
+import commonConstant from "./../constants/common.js";
+const jwtAdminKey = commonConstant.jwtAdminKey;
 
 export const login = async (request, response) => {
   try {
