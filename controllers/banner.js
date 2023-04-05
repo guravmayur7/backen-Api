@@ -10,6 +10,11 @@ export const addBanner = async (req, res) => {
   let result = await bannerModel.save();
   res.send(result);
 };
-export const getBanner = (request, response) => {
-  response.send("get banner");
+export const getBanner = async (req, res) => {
+  try {
+    let banners = await Banner.find();
+    return await res.status(200).send(banners);
+  } catch (error) {
+    return await res.status(500).send(error);
+  }
 };
