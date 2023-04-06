@@ -1,5 +1,9 @@
 import express from "express";
-import { addBanner, getBanner } from "./../controllers/banner.js";
+import {
+  addBanner,
+  getBanner,
+  getBannerById,
+} from "./../controllers/banner.js";
 import multer from "multer";
 import { verifyAdminToken } from "./../middleware/Admin.js";
 //const upload = multer({ dest: "./assets/products/" });
@@ -19,6 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const router = express.Router();
+//admin routes
 router.post(
   "/add-banner",
   verifyAdminToken,
@@ -26,4 +31,6 @@ router.post(
   addBanner
 );
 router.get("/get-banner", verifyAdminToken, getBanner);
+router.get("/get-banner/:id", verifyAdminToken, getBannerById);
+//admin routes end
 export default router;
