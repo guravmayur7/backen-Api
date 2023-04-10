@@ -3,10 +3,10 @@ import {
   addBanner,
   getBanner,
   getBannerById,
+  UpdateBanner,
 } from "./../controllers/banner.js";
 import multer from "multer";
 import { verifyAdminToken } from "./../middleware/Admin.js";
-//const upload = multer({ dest: "./assets/products/" });
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -30,7 +30,15 @@ router.post(
   upload.single("banner_image"),
   addBanner
 );
+
 router.get("/get-banner", verifyAdminToken, getBanner);
 router.get("/get-banner/:id", verifyAdminToken, getBannerById);
+
+router.post(
+  "/update-banner",
+  verifyAdminToken,
+  upload.single("banner_image"),
+  UpdateBanner
+);
 //admin routes end
 export default router;
