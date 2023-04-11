@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import bannerRoute from "./routes/banner.js";
+import categoryRoute from "./routes/category.js";
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -40,4 +41,5 @@ app.use(express.static("assets"));
 // });
 app.use("/auth", authRoute);
 app.use("/banners", bannerRoute);
+app.use("/category", categoryRoute);
 //app.listen(PORT);

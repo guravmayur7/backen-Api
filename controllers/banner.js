@@ -1,6 +1,5 @@
 import Banner from "./../models/Banners.js";
 import fs from "fs";
-import path from "path";
 export const addBanner = async (req, res) => {
   try {
     let bannerModel = new Banner();
