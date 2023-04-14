@@ -24,7 +24,7 @@ export const getBanner = async (req, res) => {
           req.protocol +
           "://" +
           req.get("host") +
-          "/products/" +
+          "/banner/" +
           banner.banner_image;
       });
     }
@@ -49,7 +49,7 @@ export const getBannerById = async (req, res) => {
 export const UpdateBanner = async (req, res) => {
   try {
     let bannerModel = await Banner.findById({ _id: req.body._id });
-    let oldFile = "./assets/products/" + bannerModel.banner_image;
+    let oldFile = "./assets/banner/" + bannerModel.banner_image;
     bannerModel.banner_title = req.body.banner_title;
     bannerModel.banner_type = req.body.banner_type;
     bannerModel.banner_url = req.body.banner_url;

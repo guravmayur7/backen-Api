@@ -4,6 +4,7 @@ import {
   getCategory,
   getCategoryById,
   UpdateCategory,
+  getParentCategories,
 } from "./../controllers/category.js";
 import multer from "multer";
 import { verifyAdminToken } from "./../middleware/Admin.js";
@@ -35,9 +36,9 @@ router.get("/get-category/:id", verifyAdminToken, getCategoryById);
 router.post(
   "/update-category",
   verifyAdminToken,
-  upload.single("list_image"),
-  upload.single("menu_image"),
+  multipleUpload,
   UpdateCategory
 );
+router.get("/get-parent-categories", verifyAdminToken, getParentCategories);
 //admin routes end
 export default router;
