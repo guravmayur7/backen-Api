@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-interface ISpecification {
-  type: String;
-  value: String;
-}
 
 const productsSchema = mongoose.Schema({
   product_name: { type: String },
@@ -27,10 +23,19 @@ const productsSchema = mongoose.Schema({
   related_images: { type: [String] },
   specification: [
     {
-      sp_type: { type: String },
-      sp_value: { type: String },
+      sType: { type: String },
+      sValue: { type: String },
     },
   ],
+  varients: [
+    {
+      vName: { type: String },
+      vValue: { type: [String] },
+    },
+  ],
+
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
 });
 const Products = mongoose.model("products", productsSchema);
-export default Banner;
+export default Products;
