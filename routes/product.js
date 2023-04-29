@@ -10,7 +10,7 @@ import { verifyAdminToken } from "./../middleware/Admin.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./assets/product/");
+    cb(null, "./assets/products/");
   },
   filename: function (req, file, cb) {
     const re = /(?:\.([^.]+))?$/;
@@ -21,14 +21,17 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+const multipleUpload = upload.fields([
+  { name: "main_image", maxCount: 1 },
+  { name: "related_images", maxCount: 6 },
+]);
 
 const router = express.Router();
 //admin routes
-router.post("/add-product", verifyAdminToken, addProduct);
+router.post("/add-product", verifyAdminToken, multipleUpload, addProduct);
 
 router.get("/get-product", verifyAdminToken, getProducts);
 router.get("/get-product/:id", verifyAdminToken, getProductById);
-
 router.post("/update-product", verifyAdminToken, updateProduct);
 //admin routes end
 export default router;
