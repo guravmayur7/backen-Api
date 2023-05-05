@@ -4,6 +4,7 @@ import {
   getProductById,
   getProducts,
   updateProduct,
+  removeRelatedImage,
 } from "./../controllers/product.js";
 import multer from "multer";
 import { verifyAdminToken } from "./../middleware/Admin.js";
@@ -32,6 +33,16 @@ router.post("/add-product", verifyAdminToken, multipleUpload, addProduct);
 
 router.get("/get-product", verifyAdminToken, getProducts);
 router.get("/get-product/:id", verifyAdminToken, getProductById);
-router.post("/update-product", verifyAdminToken, updateProduct);
+router.put(
+  "/update-product/:id",
+  verifyAdminToken,
+  multipleUpload,
+  updateProduct
+);
+router.get(
+  "/remove-related-image/:id/:imageIndex",
+  verifyAdminToken,
+  removeRelatedImage
+);
 //admin routes end
 export default router;

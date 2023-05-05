@@ -31,8 +31,6 @@ export const addCategory = async (req, res) => {
 };
 export const getCategory = async (req, res) => {
   try {
-    //let categories = await Category.find();
-
     await Category.aggregate([
       {
         $lookup: {
@@ -52,17 +50,6 @@ export const getCategory = async (req, res) => {
         console.log(error, 44);
         return await res.status(500).send(error);
       });
-    // if (banners.length > 0) {
-    //   banners.map((banner) => {
-    //     banner.banner_image =
-    //       req.protocol +
-    //       "://" +
-    //       req.get("host") +
-    //       "/products/" +
-    //       banner.banner_image;
-    //   });
-    // }
-    //return await res.status(200).send(result);
   } catch (error) {
     console.log(error);
     return await res.status(500).send(error);
