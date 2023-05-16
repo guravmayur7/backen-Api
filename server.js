@@ -6,6 +6,8 @@ import authRoute from "./routes/auth.js";
 import bannerRoute from "./routes/banner.js";
 import categoryRoute from "./routes/category.js";
 import productRoute from "./routes/product.js";
+//frontend import start here
+import FrontendCategoryRoute from "./routes/frontend/category.js";
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -37,11 +39,12 @@ mongoose
 app.use(express.static("public"));
 app.use(express.static("assets"));
 
-// app.get("/", (request, response) => {
-//   response.send("app is working");
-// });
 app.use("/auth", authRoute);
 app.use("/banners", bannerRoute);
 app.use("/category", categoryRoute);
 app.use("/product", productRoute);
+
+//frontend routes starts here
+app.use("/api/category", FrontendCategoryRoute);
+//frontend routes end here
 //app.listen(PORT);
