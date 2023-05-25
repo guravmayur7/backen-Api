@@ -1,47 +1,29 @@
 import Category from "./../../models/Category.js";
 export const getCategory = async (req, res) => {
-  let responseCat = [];
   try {
-    // await Category.aggregate([
-    //   //   {
-    //   //     $lookup: {
-    //   //       from: "categories",
-    //   //       localField: "_id",
-    //   //       foreignField: "parent_id",
-    //   //       as: "child_category",
-    //   //     },
-    //   //   },
-    //   //   {
-    //   //     $match: {
-    //   //       parent_id: null,
-    //   //     },
-    //   //   },
-    // ])
+    const responseResult = {};
+    let parentIndex = 0;
     await Category.find({ parent_id: null })
+      .lean()
       .then(async (result) => {
-        if (result) {
-          let responseArray = [];
-          for (let i = 0; i < result.length; i++) {
-            //check here repeat category id
-            let parent = result[i]; //women
-            let child = {};
-            child = await getChildCategory(parent._id.toString()); //athenic
-            if (child.length > 0) {
-              for (let c = 0; c < child.length; c++) {
-                //const element = child[c];
-                let gChild = {};
-                gChild = await getChildCategory(child[c]._id.toString());
-                child = { parentCat: child[c], childCat: gChild };
-              }
-            }
-            responseArray[i] = { parentCat: parent, childCat: child };
+        for (const parentCat of result) {
+          const categoryGroups = await getChildCategory(
+            parentCat._id.toString()
+          );
+          for (const catGroup of categoryGroups) {
+            const categoryItems = await getChildCategory(
+              catGroup._id.toString()
+            );
+            catGroup["categoryItems"] = categoryItems;
           }
-
-          return await res.status(200).send(responseArray);
+          parentCat["categoryGroups"] = categoryGroups;
+          responseResult[parentIndex] = parentCat;
+          parentIndex++;
         }
+        return await res.status(200).send(responseResult);
       })
       .catch(async (error) => {
-        console.log(error, 44);
+        console.log(error);
         return await res.status(500).send(error);
       });
   } catch (error) {
@@ -50,7 +32,9 @@ export const getCategory = async (req, res) => {
   }
 };
 const getChildCategory = async (parent_id = null) => {
-  const result = await Category.find({ parent_id: parent_id });
+  const result = await Category.find({ parent_id: parent_id }).lean();
   return result;
-  //return parent_id;
 };
+// function delay(ms) {
+//   return new Promise((resolve) => setTimeout(resolve, ms));
+// }
