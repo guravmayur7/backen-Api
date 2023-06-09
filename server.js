@@ -8,6 +8,7 @@ import categoryRoute from "./routes/category.js";
 import productRoute from "./routes/product.js";
 //frontend import start here
 import FrontendCategoryRoute from "./routes/frontend/category.js";
+import FrontendProductsRoute from "./routes/frontend/products.js";
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -46,5 +47,6 @@ app.use("/product", productRoute);
 
 //frontend routes starts here
 app.use("/api/category", FrontendCategoryRoute);
+app.use("/api/product", FrontendProductsRoute);
 //frontend routes end here
 //app.listen(PORT);

@@ -5,9 +5,15 @@ export const addCategory = async (req, res) => {
   try {
     let categoryModel = new Category();
     categoryModel.name = req.body.name;
-    if (req.body.parent_id !== "0") {
-      categoryModel.parent_id = new mongoose.Types.ObjectId(req.body.parent_id);
-    }
+    // if (req.body.parent_id !== "0" || req.body.parent_id !== "") {
+    //   categoryModel.parent_id = new mongoose.Types.ObjectId(req.body.parent_id);
+    // } else {
+    //   categoryModel.parent_id = null;
+    // }
+    req.body.parent_id
+      ? new mongoose.Types.ObjectId(req.body.parent_id)
+      : (categoryModel.parent_id = null);
+
     categoryModel.is_show_menu_image = Boolean(req.body.is_show_menu_image);
     categoryModel.meta_description = req.body.meta_description;
     categoryModel.meta_keyword = req.body.meta_keyword;
